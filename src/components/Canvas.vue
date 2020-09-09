@@ -46,6 +46,9 @@ export default{
 		},
 		numberOfDays: function(){
 			return this.maxDate.diff(this.minDate, "days");
+		},
+		numberOfBoroughs: function(){
+			return _.size(this.boroughs);
 		}
 	},
 	mounted: function(){
@@ -65,7 +68,27 @@ export default{
 			p.draw = function(){
 				p.background(0);
 
-				p.text(vm.numberOfDays, p.width/2, p.height/2);
+				const rectWidth = p.width/vm.numberOfBoroughs;
+				let i = 0;
+
+				p.push();
+				p.translate(0, p.height);
+				p.rectMode(p.CORNERS);
+
+				_.each(vm.boroughs, (area_name, area_code) => {
+					p.fill(255);
+
+					const rectHeight = p.map(
+						vm.byArea[area_code]["2020-06-06"].totalCases,
+						0, 2000,
+						0, p.height
+					);
+					p.rect(rectWidth * i, 0, rectWidth * (i + 1), -rectHeight);
+
+					i++;
+				});
+
+				p.pop();
 			};
 		};
 
