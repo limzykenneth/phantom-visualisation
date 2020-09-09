@@ -17,8 +17,47 @@ import App from "./App.vue";
 
 	App.data = function(){
 		return {
-			covid: data
+			covid: data.filter(entry => !!entry.area_code)
 		};
+	};
+
+	App.computed = {
+		boroughs: function(){
+			return _.reduce(this.covid, (acc, entry) => {
+				if(typeof acc[entry.area_code] === "undefined"){
+					acc[entry.area_code] = entry.area_name;
+				}
+				return acc;
+			}, {});
+		},
+		byDate: function(){
+			return _.reduce(this.covid, (acc, entry) => {
+				if(typeof acc[entry.date] === "undefined"){
+					acc[entry.date] = {};
+				}
+
+				acc[entry.date][entry.area_code] = {
+					newCases: entry.new_cases,
+					totalCases: entry.total_cases
+				};
+
+				return acc;
+			}, {});
+		},
+		byArea: function(){
+			return _.reduce(this.covid, (acc, entry) => {
+				if(typeof acc[entry.area_code] === "undefined"){
+					acc[entry.area_code] = {};
+				}
+
+				acc[entry.area_code][entry.date] = {
+					newCases: entry.new_cases,
+					totalCases: entry.total_cases
+				};
+
+				return acc;
+			}, {});
+		}
 	};
 
 	new Vue({
