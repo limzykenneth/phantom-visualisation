@@ -1,5 +1,8 @@
 import Vue from "vue";
+import Vuex from "vuex";
 import App from "./App.vue";
+import store from "./store.js";
+Vue.use(Vuex);
 
 (async function(){
 	const {data} = await new Promise((resolve, reject) => {
@@ -62,6 +65,7 @@ import App from "./App.vue";
 
 	new Vue({
 		el: "#page-content",
+		store: store,
 		render: function(createElement){
 			return createElement(App);
 		}

@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "vue": "^2.6.12",
-    "vue-hot-reload-api": "^2.3.4"
+    "vue-hot-reload-api": "^2.3.4",
+    "vuex": "^3.5.1"
   },
   "staticFiles": {
     "staticPath": [
