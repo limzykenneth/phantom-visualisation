@@ -1,0 +1,43 @@
+{
+  "name": "phantom-covid-vis",
+  "version": "0.1.0",
+  "description": "COVID-19 data visualisation",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "rm -rf dist/*",
+    "build": "parcel build index.html",
+    "prewatch": "rm -rf dist/*",
+    "watch": "parcel index.html",
+    "prerelease": "npm run build"
+  },
+  "author": "Kenneth Lim <limzy.kenneth@gmail.com> (https://limzykenneth.com)",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.2.0",
+    "eslint": "^7.8.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "less": "^3.12.2",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.5.0",
+    "posthtml-favicons": "^1.4.0",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "dependencies": {
+    "vue": "^2.6.12",
+    "vue-hot-reload-api": "^2.3.4"
+  },
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "assets/data",
+        "staticOutDir": "data"
+      }
+    ]
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ]
+}
