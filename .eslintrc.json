@@ -15,7 +15,8 @@
 	"globals": {
 		"_": true,
 		"Papa": true,
-		"p5": true
+		"p5": true,
+		"moment": true
 	},
 	"root": true,
 	"rules": {

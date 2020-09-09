@@ -1,6 +1,11 @@
 <template>
 	<main id="page-content">
-		<app-canvas></app-canvas>
+		<app-canvas
+			:boroughs="boroughs"
+			:by-date="byDate"
+			:by-area="byArea"
+			:covid="covid"
+		></app-canvas>
 		<app-controls></app-controls>
 	</main>
 </template>
