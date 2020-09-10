@@ -1,6 +1,6 @@
 <template>
 	<div id="controls-container">
-		<input type="range" name="date" id="date-picker" min=0
+		<input type="range" name="date" id="date-picker" step=1 min=0
 			:max="numberOfDays-1"
 			v-model="day"
 		>
@@ -38,7 +38,15 @@ export default{
 </script>
 
 <style lang="less" scoped>
-#controls-container{
+@import "../stylesheets/range.less";
 
+#controls-container{
+	position: absolute;
+	left: 0;
+	top: 0;
+
+	#date-picker{
+		.custom-range-input(#aaa, #fff);
+	}
 }
 </style>

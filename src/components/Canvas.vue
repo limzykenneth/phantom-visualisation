@@ -39,7 +39,26 @@ export default{
 			required: true
 		}
 	},
-	computed: {},
+	computed: {
+		maxTotalCases: function(){
+			return _.reduce(this.covid, (acc, entry) => {
+				if(acc < parseInt(entry.total_cases)){
+					acc = parseInt(entry.total_cases);
+				}
+
+				return acc;
+			}, 0);
+		},
+		maxNewCases: function(){
+			return _.reduce(this.covid, (acc, entry) => {
+				if(acc < parseInt(entry.new_cases)){
+					acc = parseInt(entry.new_cases);
+				}
+
+				return acc;
+			}, 0);
+		}
+	},
 	mounted: function(){
 		const vm = this;
 
@@ -74,7 +93,7 @@ export default{
 
 					const rectHeight = p.map(
 						totalCases,
-						0, 2000,
+						0, vm.maxTotalCases,
 						0, p.height
 					);
 					p.rect(rectWidth * i, 0, rectWidth * (i + 1), -rectHeight);
@@ -93,6 +112,8 @@ export default{
 
 <style lang="less" scoped>
 #canvas-container{
-
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 </style>
