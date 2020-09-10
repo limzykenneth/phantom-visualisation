@@ -27,6 +27,9 @@ export default{
 	components: {
 		"app-canvas": AppCanvas,
 		"app-controls": AppControls
+	},
+	created: function(){
+		this.$store.commit("setNumberOfDays", this.numberOfDays);
 	}
 };
 </script>
