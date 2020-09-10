@@ -11,6 +11,18 @@
 				<i class="material-icons md-18">{{ playbackIcon }}</i>
 			</button>
 		</div>
+
+		<div id="selection-container">
+			<select id="area-selection"
+				v-model="selectedArea"
+			>
+				<option value="" selected></option>
+				<option
+					v-for="(area_name, area_code) in boroughs"
+					:value="area_code"
+				>{{ area_name }}</option>
+			</select>
+		</div>
 	</div>
 </template>
 
@@ -29,6 +41,10 @@ export default{
 		numberOfDays: {
 			type: Number,
 			required: true
+		},
+		boroughs: {
+			type: Object,
+			required: true
 		}
 	},
 	computed: {
@@ -38,6 +54,14 @@ export default{
 			},
 			set: function(value){
 				this.$store.commit("setCurrentDay", parseInt(value));
+			}
+		},
+		selectedArea: {
+			get: function(){
+				return this.$store.state.currentArea;
+			},
+			set: function(value){
+				this.$store.commit("setCurrentArea", value);
 			}
 		},
 		playbackIcon: function(){

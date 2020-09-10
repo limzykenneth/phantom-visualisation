@@ -37,7 +37,11 @@ export default function(vm){
 
 			let i = 0;
 			_.each(vm.boroughs, (area_name, area_code) => {
-				p.fill(255);
+				if(area_code === vm.$store.state.currentArea){
+					p.fill(255, 0, 0);
+				}else{
+					p.fill(255);
+				}
 
 				let currentDate = moment(vm.minDate).add(vm.$store.getters.wholeCurrentDay, "days").format("YYYY-MM-DD");
 				let totalCases = vm.byArea[area_code][currentDate].totalCases;

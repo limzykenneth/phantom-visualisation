@@ -14,6 +14,7 @@
 			:min-date="minDate"
 			:max-date="maxDate"
 			:number-of-days="numberOfDays"
+			:boroughs="boroughs"
 		></app-controls>
 	</main>
 </template>

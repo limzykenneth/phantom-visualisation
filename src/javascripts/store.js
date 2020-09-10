@@ -5,7 +5,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state: {
 		currentDay: 0,
-		currentArea: null,
+		currentArea: "",
 		playState: "pause",
 		numberOfDays: 0
 	},
