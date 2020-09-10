@@ -1,6 +1,6 @@
 import Vue from "vue";
-import App from "./App.vue";
-import store from "./store.js";
+import App from "./components/App.vue";
+import store from "./javascripts/store.js";
 
 (async function(){
 	const {data} = await new Promise((resolve, reject) => {

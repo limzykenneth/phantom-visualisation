@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import AppCanvas from "./components/Canvas.vue";
-import AppControls from "./components/Controls.vue";
+import AppCanvas from "./Canvas.vue";
+import AppControls from "./Controls.vue";
 
 export default{
 	name: "App",
