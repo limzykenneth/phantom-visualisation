@@ -4,6 +4,13 @@
 			:max="numberOfDays-1"
 			v-model="day"
 		>
+		<div id="playback-container">
+			<button class="buttons" id="pause-button"
+				v-on:click="togglePlayState"
+			>
+				<i class="material-icons md-18">{{ playbackIcon }}</i>
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -27,10 +34,34 @@ export default{
 	computed: {
 		day: {
 			get: function(){
-				return this.$store.state.currentDay;
+				return this.$store.getters.wholeCurrentDay;
 			},
 			set: function(value){
-				this.$store.commit("setCurrentDay", value);
+				this.$store.commit("setCurrentDay", parseInt(value));
+			}
+		},
+		playbackIcon: function(){
+			if(this.$store.state.playState === "pause"){
+				return "play_arrow";
+			}else if(this.$store.state.playState === "play"){
+				return "pause";
+			}else{
+				return "";
+			}
+		}
+	},
+	methods: {
+		playTimeline: function(){
+			this.$store.commit("setPlayState", "play");
+		},
+		pauseTimeline: function(){
+			this.$store.commit("setPlayState", "pause");
+		},
+		togglePlayState: function(){
+			if(this.$store.state.playState === "play"){
+				this.$store.commit("setPlayState", "pause");
+			}else if(this.$store.state.playState === "pause"){
+				this.$store.commit("setPlayState", "play");
 			}
 		}
 	}
@@ -47,6 +78,16 @@ export default{
 
 	#date-picker{
 		.custom-range-input(#aaa, #fff);
+	}
+
+	#playback-container{
+		.buttons{
+			cursor: pointer;
+
+			.material-icons{
+				display: block;
+			}
+		}
 	}
 }
 </style>

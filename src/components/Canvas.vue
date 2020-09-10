@@ -64,6 +64,7 @@ export default{
 
 		let sketch = function(p){
 			let canvas;
+			const playbackLength = 5000;
 
 			p.setup = function(){
 				canvas = p.createCanvas(p.windowWidth, p.windowHeight);
@@ -76,19 +77,30 @@ export default{
 			p.draw = function(){
 				p.background(0);
 
+				// Update data or state
+				const incrementAmt = p.deltaTime / playbackLength * vm.numberOfDays;
+				if(vm.$store.state.playState === "play"){
+					vm.$store.commit("incrementCurrentDay", incrementAmt);
+
+					if(vm.$store.state.currentDay >= 128){
+						vm.$store.commit("setPlayState", "pause");
+					}
+				}
+
+				// Draw graphics
 				const rectWidth = p.width/vm.numberOfBoroughs;
-				let i = 0;
 
 				p.push();
 				p.translate(0, p.height);
 				p.rectMode(p.CORNERS);
 
+				let i = 0;
 				_.each(vm.boroughs, (area_name, area_code) => {
 					p.fill(255);
 
 					let currentDate;
 					let totalCases;
-					currentDate = moment(vm.minDate).add(vm.$store.state.currentDay, "days").format("YYYY-MM-DD");
+					currentDate = moment(vm.minDate).add(vm.$store.getters.wholeCurrentDay, "days").format("YYYY-MM-DD");
 					totalCases = vm.byArea[area_code][currentDate].totalCases;
 
 					const rectHeight = p.map(
