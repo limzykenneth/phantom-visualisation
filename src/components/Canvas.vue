@@ -115,7 +115,7 @@ export default{
 						0, vm.maxTotalCases,
 						0, p.height
 					);
-					p.rect(rectWidth * i, -rectHeight, rectWidth * (i + 1), -rectHeight2-rectHeight);
+					p.rect(rectWidth * i, -rectHeight, rectWidth * (i + 1), -rectHeight+rectHeight2);
 
 					i++;
 				});
