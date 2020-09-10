@@ -5,8 +5,16 @@
 			:by-date="byDate"
 			:by-area="byArea"
 			:covid="covid"
+			:min-date="minDate"
+			:max-date="maxDate"
+			:number-of-days="numberOfDays"
+			:number-of-boroughs="numberOfBoroughs"
 		></app-canvas>
-		<app-controls></app-controls>
+		<app-controls
+			:min-date="minDate"
+			:max-date="maxDate"
+			:number-of-days="numberOfDays"
+		></app-controls>
 	</main>
 </template>
 

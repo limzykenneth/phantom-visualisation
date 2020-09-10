@@ -21,36 +21,25 @@ export default{
 		covid: {
 			type: Array,
 			required: true
+		},
+		minDate: {
+			type: Object,
+			required: true
+		},
+		maxDate: {
+			type: Object,
+			required: true
+		},
+		numberOfDays: {
+			type: Number,
+			required: true
+		},
+		numberOfBoroughs: {
+			type: Number,
+			required: true
 		}
 	},
-	computed: {
-		minDate: function(){
-			return _.reduce(this.covid, (val, entry) => {
-				const date = moment(entry.date, "YYYY-MM-DD");
-				if(date.isBefore(val)){
-					val = date;
-				}
-
-				return val;
-			}, moment("2020-12-31", "YYYY-MM-DD"));
-		},
-		maxDate: function(){
-			return _.reduce(this.covid, (val, entry) => {
-				const date = moment(entry.date, "YYYY-MM-DD");
-				if(date.isAfter(val)){
-					val = date;
-				}
-
-				return val;
-			}, moment("2020-01-01", "YYYY-MM-DD"));
-		},
-		numberOfDays: function(){
-			return this.maxDate.diff(this.minDate, "days");
-		},
-		numberOfBoroughs: function(){
-			return _.size(this.boroughs);
-		}
-	},
+	computed: {},
 	mounted: function(){
 		const vm = this;
 
@@ -78,8 +67,13 @@ export default{
 				_.each(vm.boroughs, (area_name, area_code) => {
 					p.fill(255);
 
+					let currentDate;
+					let totalCases;
+					currentDate = moment(vm.minDate).add(vm.$store.state.currentDay, "days").format("YYYY-MM-DD");
+					totalCases = vm.byArea[area_code][currentDate].totalCases;
+
 					const rectHeight = p.map(
-						vm.byArea[area_code]["2020-06-06"].totalCases,
+						totalCases,
 						0, 2000,
 						0, p.height
 					);

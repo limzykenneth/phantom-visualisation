@@ -4,7 +4,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		currentDay: 1,
+		currentDay: 0,
 		currentArea: null
 	},
 	mutations: {

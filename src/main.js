@@ -58,6 +58,32 @@ import store from "./store.js";
 
 				return acc;
 			}, {});
+		},
+		minDate: function(){
+			return _.reduce(this.covid, (val, entry) => {
+				const date = moment(entry.date, "YYYY-MM-DD");
+				if(date.isBefore(val)){
+					val = date;
+				}
+
+				return val;
+			}, moment("2020-12-31", "YYYY-MM-DD"));
+		},
+		maxDate: function(){
+			return _.reduce(this.covid, (val, entry) => {
+				const date = moment(entry.date, "YYYY-MM-DD");
+				if(date.isAfter(val)){
+					val = date;
+				}
+
+				return val;
+			}, moment("2020-01-01", "YYYY-MM-DD"));
+		},
+		numberOfDays: function(){
+			return this.maxDate.diff(this.minDate, "days") + 1;
+		},
+		numberOfBoroughs: function(){
+			return _.size(this.boroughs);
 		}
 	};
 
