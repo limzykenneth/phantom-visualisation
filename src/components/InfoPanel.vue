@@ -1,9 +1,9 @@
 <template>
 	<section id="info-container">
-		<p>Borough: {{ currentArea }}</p>
+		<p>Borough: {{ currentArea || "Greater London" }}</p>
 		<p>Date: {{ currentDate.format("Do MMMM YYYY") }}</p>
-		<p>New cases: {{ newCases }}</p>
-		<p>Total cases: {{ totalCases }}</p>
+		<p>New cases: {{ newCases !== false ? newCases : allNewCases }}</p>
+		<p>Total cases: {{ totalCases !== false ? totalCases : allTotalCases }}</p>
 	</section>
 </template>
 
@@ -40,18 +40,32 @@ export default{
 		totalCases: function(){
 			const areaCode = this.$store.state.currentArea;
 			if(areaCode === ""){
-				return "";
+				return false;
 			}else{
 				return this.byArea[areaCode][this.currentDate.format("YYYY-MM-DD")].totalCases;
 			}
 		},
+		allTotalCases: function(){
+			return _.reduce(this.byArea, (acc, borough) => {
+				acc += parseInt(borough[this.currentDate.format("YYYY-MM-DD")].totalCases);
+
+				return acc;
+			}, 0);
+		},
 		newCases: function(){
 			const areaCode = this.$store.state.currentArea;
 			if(areaCode === ""){
-				return "";
+				return false;
 			}else{
 				return this.byArea[areaCode][this.currentDate.format("YYYY-MM-DD")].newCases;
 			}
+		},
+		allNewCases: function(){
+			return _.reduce(this.byArea, (acc, borough) => {
+				acc += parseInt(borough[this.currentDate.format("YYYY-MM-DD")].newCases);
+
+				return acc;
+			}, 0);
 		}
 	}
 };
