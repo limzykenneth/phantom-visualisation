@@ -42,9 +42,7 @@ class Borough{
 
 		this.cases = cases;
 		this.radius = 0;
-		this.position = p.createVector(p.random(-100, 100), p.random(-100, 100));
-		this.velocity = p.createVector(0, 0);
-		this.acceleration = p.createVector(0, 0);
+		this.position = p.createVector(p.random(-1, 1), p.random(-1, 1));
 		this.related = [];
 	}
 
@@ -64,23 +62,47 @@ class Borough{
 			5, 200
 		);
 
-		this.acceleration.setMag(0);
-		this.related.forEach((borough) => {
-			const distance = this.position.dist(borough.position) - (this.radius + borough.radius);
-			const direction = this.p.createVector(
-				this.position.x - borough.position.x,
-				this.position.y - borough.position.y
-			).setMag(
-				this.p.map(distance, -10, 10, 1, -1, true) / this.related.length
-			);
-			this.acceleration.add(direction);
+		boroughs.forEach((borough) => {
+			if(this.code !== borough.code){
+				const distance = this.position.dist(borough.position) * 2 - (this.radius + borough.radius);
+
+				if(distance < 2){
+					// Overlapping
+					this.position.add(
+						this.p.createVector(
+							this.position.x - borough.position.x,
+							this.position.y - borough.position.y
+						).setMag(this.p.map(
+							Math.abs(distance),
+							0, 200,
+							2, 50,
+							true
+						))
+					);
+				}
+			}
 		});
 
-		// Acceleration
-		this.velocity.add(this.acceleration);
-		this.velocity.add(this.inward());
-		// Position
-		this.position.add(this.velocity);
+		let inward = true;
+		boroughs.forEach((borough) => {
+			const distance = this.position.dist(borough.position) * 2 - (this.radius + borough.radius);
+			if(distance > 0 && distance < 5){
+				inward = false;
+			}
+		});
+
+		if(inward){
+			this.position.add(this.inward()
+				.setMag(
+					this.p.map(
+						this.position.dist(this.p.createVector(0, 0)),
+						0, 100,
+						0, 5,
+						true
+					)
+				)
+			);
+		}
 	}
 
 	draw(){
