@@ -33,6 +33,19 @@ export function drawCirclesMap(p, vm){
 	p.pop();
 }
 
+export function mouseMovedCirclesMap(p, vm){
+	for(const borough of boroughs){
+		const distance = borough.position.dist(p.createVector(p.mouseX-p.width/2, p.mouseY-p.height/2)) - borough.radius/2;
+
+		if(distance < 0){
+			vm.$store.commit("setCurrentArea", borough.code);
+			break;
+		}
+
+		vm.$store.commit("setCurrentArea", "");
+	}
+}
+
 class Borough{
 	constructor(name, code, cases, p, vm){
 		this.name = name;
@@ -119,12 +132,13 @@ class Borough{
 
 	draw(){
 		this.p.fill(this.color);
-		this.p.noStroke();
+		if(this.vm.$store.state.currentArea === this.code){
+			this.p.strokeWeight(3);
+			this.p.stroke("#ffffff");
+		}else{
+			this.p.noStroke();
+		}
 		this.p.circle(this.position.x, this.position.y, this.radius);
-
-		// this.p.fill(0);
-		// this.p.stroke(255);
-		// this.p.text(this.name, this.x, this.y);
 	}
 
 	linkBorough(targetBorough){

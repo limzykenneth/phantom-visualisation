@@ -1,5 +1,5 @@
 import drawBarGraph from "./barGraph.js";
-import {initCirclesMap, drawCirclesMap} from "./circlesMap.js";
+import {initCirclesMap, drawCirclesMap, mouseMovedCirclesMap} from "./circlesMap.js";
 import {initCirclesConcentric, drawCirclesConcentric} from "./circlesConcentric.js";
 
 export default function(vm){
@@ -35,6 +35,10 @@ export default function(vm){
 			// drawBarGraph(p, vm);
 			drawCirclesMap(p, vm);
 			// drawCirclesConcentric(p, vm);
+		};
+
+		p.mouseMoved = function(){
+			mouseMovedCirclesMap(p, vm);
 		};
 	};
 
