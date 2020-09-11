@@ -10,24 +10,34 @@
 			:number-of-days="numberOfDays"
 			:number-of-boroughs="numberOfBoroughs"
 		></app-canvas>
+
 		<app-controls
 			:min-date="minDate"
 			:max-date="maxDate"
 			:number-of-days="numberOfDays"
 			:boroughs="boroughs"
 		></app-controls>
+
+		<info-panel
+			:boroughs="boroughs"
+			:min-date="minDate"
+			:by-date="byDate"
+			:by-area="byArea"
+		></info-panel>
 	</main>
 </template>
 
 <script>
 import AppCanvas from "./Canvas.vue";
 import AppControls from "./Controls.vue";
+import InfoPanel from "./InfoPanel.vue";
 
 export default{
 	name: "App",
 	components: {
 		"app-canvas": AppCanvas,
-		"app-controls": AppControls
+		"app-controls": AppControls,
+		"info-panel": InfoPanel
 	},
 	created: function(){
 		this.$store.commit("setNumberOfDays", this.numberOfDays);
