@@ -33,9 +33,14 @@ export function drawCirclesMap(p, vm){
 	p.pop();
 }
 
-export function mouseMovedCirclesMap(p, vm){
+export function mouseMovedCirclesMap(globalTranslate, p, vm){
 	for(const borough of boroughs){
-		const distance = borough.position.dist(p.createVector(p.mouseX-p.width/2, p.mouseY-p.height/2)) - borough.radius/2;
+		const distance = borough.position.dist(
+			p.createVector(
+				p.mouseX - p.width/2 - globalTranslate.x,
+				p.mouseY - p.height/2 - globalTranslate.y
+			)
+		) - borough.radius/2;
 
 		if(distance < 0){
 			vm.$store.commit("setCurrentArea", borough.code);

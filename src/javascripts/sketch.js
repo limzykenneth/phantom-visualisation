@@ -6,6 +6,10 @@ export default function(vm){
 	let sketch = function(p){
 		let canvas;
 		const playbackLength = 30000;
+		let globalTranslate = {
+			x: 0,
+			y: 0
+		};
 
 		p.setup = function(){
 			canvas = p.createCanvas(p.windowWidth, p.windowHeight);
@@ -32,13 +36,21 @@ export default function(vm){
 			}
 
 			// Draw graphics
+			if(p.mouseIsPressed){
+				globalTranslate.x += p.mouseX - p.pmouseX;
+				globalTranslate.y += p.mouseY - p.pmouseY;
+			}
+
+			globalTranslate.x = Math.min(Math.max(globalTranslate.x, -150), 150);
+			globalTranslate.y = Math.min(Math.max(globalTranslate.y, -150), 150);
+			p.translate(globalTranslate.x, globalTranslate.y);
 			// drawBarGraph(p, vm);
 			drawCirclesMap(p, vm);
 			// drawCirclesConcentric(p, vm);
 		};
 
 		p.mouseMoved = function(){
-			mouseMovedCirclesMap(p, vm);
+			mouseMovedCirclesMap(globalTranslate, p, vm);
 		};
 	};
 
