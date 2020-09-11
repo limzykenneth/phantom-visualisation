@@ -43,7 +43,9 @@ class Borough{
 		this.cases = cases;
 		this.radius = 0;
 		this.position = p.createVector(p.random(-1, 1), p.random(-1, 1));
+		this.velocity = p.createVector(0, 0);
 		this.related = [];
+		this.color = p.color(255, 100);
 	}
 
 	inward(){
@@ -59,25 +61,30 @@ class Borough{
 		this.radius = this.p.map(
 			totalCases,
 			0, this.vm.maxTotalCases,
-			5, 200
+			0, 200
+		);
+		this.color = this.p.lerpColor(
+			this.p.color("#27D99999"),
+			this.p.color("#8C240D99"),
+			this.vm.byArea[this.code][currentDate].newCases / this.vm.maxNewCases
 		);
 
+		this.velocity.setMag(0);
 		boroughs.forEach((borough) => {
 			if(this.code !== borough.code){
 				const distance = this.position.dist(borough.position) * 2 - (this.radius + borough.radius);
 
-				if(distance < 2){
+				if(distance < 0){
 					// Overlapping
-					this.position.add(
+					this.velocity.add(
 						this.p.createVector(
 							this.position.x - borough.position.x,
 							this.position.y - borough.position.y
-						).setMag(this.p.map(
+						).setMag(Math.floor(this.p.map(
 							Math.abs(distance),
 							0, 200,
-							2, 50,
-							true
-						))
+							1.25, 5
+						)))
 					);
 				}
 			}
@@ -92,21 +99,26 @@ class Borough{
 		});
 
 		if(inward){
-			this.position.add(this.inward()
+			this.velocity.add(this.inward()
 				.setMag(
 					this.p.map(
 						this.position.dist(this.p.createVector(0, 0)),
 						0, 100,
-						0, 5,
+						0, 1,
 						true
 					)
 				)
 			);
 		}
+
+		if(this.velocity.mag() < 0.5){
+			this.velocity.setMag(0);
+		}
+		this.position.add(this.velocity);
 	}
 
 	draw(){
-		this.p.fill(255, 50);
+		this.p.fill(this.color);
 		this.p.noStroke();
 		this.p.circle(this.position.x, this.position.y, this.radius);
 

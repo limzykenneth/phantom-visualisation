@@ -5,6 +5,8 @@
 <script>
 import sketch from "../javascripts/sketch.js";
 
+let p5Sketch;
+
 export default{
 	name: "AppCanvas",
 	props: {
@@ -62,7 +64,10 @@ export default{
 		}
 	},
 	mounted: function(){
-		new p5(sketch(this));
+		p5Sketch = new p5(sketch(this));
+	},
+	beforeDestroy: function(){
+		p5Sketch.remove();
 	}
 };
 </script>

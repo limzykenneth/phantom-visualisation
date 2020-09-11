@@ -5,7 +5,7 @@ import {initCirclesConcentric, drawCirclesConcentric} from "./circlesConcentric.
 export default function(vm){
 	let sketch = function(p){
 		let canvas;
-		const playbackLength = 20000;
+		const playbackLength = 30000;
 
 		p.setup = function(){
 			canvas = p.createCanvas(p.windowWidth, p.windowHeight);
@@ -14,8 +14,8 @@ export default function(vm){
 			p.fill("#fff");
 			p.noStroke();
 
-			// initCirclesMap(p, vm);
-			initCirclesConcentric(p, vm);
+			initCirclesMap(p, vm);
+			// initCirclesConcentric(p, vm);
 		};
 
 		p.draw = function(){
@@ -33,8 +33,8 @@ export default function(vm){
 
 			// Draw graphics
 			// drawBarGraph(p, vm);
-			// drawCirclesMap(p, vm);
-			drawCirclesConcentric(p, vm);
+			drawCirclesMap(p, vm);
+			// drawCirclesConcentric(p, vm);
 		};
 	};
 
