@@ -92,6 +92,8 @@ export default{
 	top: 0;
 	color: white;
 	margin: 20px;
+	margin-left: 0;
+	margin-top: 0;
 
 	#info-table{
 		table-layout: fixed;
