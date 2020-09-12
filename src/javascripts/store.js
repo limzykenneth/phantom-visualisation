@@ -10,6 +10,7 @@ export default new Vuex.Store({
 		numberOfDays: 0
 	},
 	getters: {
+		// Return valid whole days based on state.currentDay
 		wholeCurrentDay: function(state){
 			return Math.max(
 				Math.min(

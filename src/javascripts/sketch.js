@@ -1,11 +1,8 @@
-import drawBarGraph from "./barGraph.js";
-import {initCirclesMap, drawCirclesMap, mouseMovedCirclesMap} from "./circlesMap.js";
-import {initCirclesConcentric, drawCirclesConcentric} from "./circlesConcentric.js";
+import {initCirclesMap, drawCirclesMap} from "./visualisations/circlesMap.js";
 
 export default function(vm){
 	let sketch = function(p){
 		let canvas;
-		const playbackLength = 30000;
 		let globalTranslate = {
 			x: 0,
 			y: 0
@@ -14,6 +11,7 @@ export default function(vm){
 			x: null,
 			y: null
 		};
+		const playbackLength = 30000;
 
 		p.setup = function(){
 			canvas = p.createCanvas(p.windowWidth, p.windowHeight);
@@ -22,17 +20,32 @@ export default function(vm){
 			p.fill("#fff");
 			p.noStroke();
 
+			// Initialize visualisation
 			initCirclesMap(p, vm);
-			// initCirclesConcentric(p, vm);
 
+			// Mouse events for moving graphics
 			canvas.mouseMoved(() => {
 				if(p.mouseIsPressed){
+					// Work out move amount by comparing current mouse position
+					// with previous mouse position
 					if(pMouse.x !== null){
 						globalTranslate.x += p.mouseX - pMouse.x;
 					}
 					if(pMouse.y !== null){
 						globalTranslate.y += p.mouseY - pMouse.y;
 					}
+
+					// Constrain movement
+					globalTranslate.x = Math.min(
+						Math.max(globalTranslate.x, -150),
+						150
+					);
+					globalTranslate.y = Math.min(
+						Math.max(globalTranslate.y, -150),
+						150
+					);
+
+					// Record mouse position
 					pMouse.x = p.mouseX;
 					pMouse.y = p.mouseY;
 				}
@@ -52,21 +65,20 @@ export default function(vm){
 			// Update data or state
 			const incrementAmt = p.deltaTime / playbackLength * vm.numberOfDays;
 			if(vm.$store.state.playState === "play"){
+				// Start playback
 				vm.$store.commit("incrementCurrentDay", incrementAmt);
 
 				if(vm.$store.state.currentDay >= 128){
+					// Stop playback if end is reached
 					vm.$store.commit("setPlayState", "pause");
 				}
 			}
 
-			// Draw graphics
-			globalTranslate.x = Math.min(Math.max(globalTranslate.x, -150), 150);
-			globalTranslate.y = Math.min(Math.max(globalTranslate.y, -150), 150);
+			// Apply graphics movement
 			p.translate(globalTranslate.x, globalTranslate.y);
 
-			// drawBarGraph(p, vm);
+			// Draw visualisation
 			drawCirclesMap(p, vm);
-			// drawCirclesConcentric(p, vm);
 		};
 
 		p.windowResized = function(){
