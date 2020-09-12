@@ -10,6 +10,10 @@ export default function(vm){
 			x: 0,
 			y: 0
 		};
+		let pMouse = {
+			x: null,
+			y: null
+		};
 
 		p.setup = function(){
 			canvas = p.createCanvas(p.windowWidth, p.windowHeight);
@@ -20,6 +24,26 @@ export default function(vm){
 
 			initCirclesMap(p, vm);
 			// initCirclesConcentric(p, vm);
+
+			canvas.mouseMoved(() => {
+				if(p.mouseIsPressed){
+					if(pMouse.x !== null){
+						globalTranslate.x += p.mouseX - pMouse.x;
+					}
+					if(pMouse.y !== null){
+						globalTranslate.y += p.mouseY - pMouse.y;
+					}
+					pMouse.x = p.mouseX;
+					pMouse.y = p.mouseY;
+				}
+			});
+
+			canvas.mouseReleased(() => {
+				pMouse = {
+					x: null,
+					y: null
+				};
+			});
 		};
 
 		p.draw = function(){
@@ -36,21 +60,13 @@ export default function(vm){
 			}
 
 			// Draw graphics
-			if(p.mouseIsPressed){
-				globalTranslate.x += p.mouseX - p.pmouseX;
-				globalTranslate.y += p.mouseY - p.pmouseY;
-			}
-
 			globalTranslate.x = Math.min(Math.max(globalTranslate.x, -150), 150);
 			globalTranslate.y = Math.min(Math.max(globalTranslate.y, -150), 150);
 			p.translate(globalTranslate.x, globalTranslate.y);
+
 			// drawBarGraph(p, vm);
 			drawCirclesMap(p, vm);
 			// drawCirclesConcentric(p, vm);
-		};
-
-		p.mouseMoved = function(){
-			mouseMovedCirclesMap(globalTranslate, p, vm);
 		};
 	};
 

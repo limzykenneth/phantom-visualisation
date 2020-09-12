@@ -13,17 +13,11 @@
 		</div>
 
 		<div id="selection-container">
-			<!-- <select id="area-selection"
-				v-model="selectedArea"
-			>
-				<option value="" selected></option>
-				<option
-					v-for="(area_name, area_code) in boroughs"
-					:value="area_code"
-				>{{ area_name }}</option>
-			</select> -->
-
 			<ul id="area-selector">
+				<li class="area"
+					:class="selectedArea === '' ? 'active' : ''"
+					v-on:click="selectArea('')"
+				>Greater London</li>
 				<li class="area"
 					v-for="(area_name, area_code) in boroughs"
 					:class="area_code === selectedArea ? 'active' : ''"
@@ -113,6 +107,7 @@ export default{
 	z-index: 5;
 	width: 100%;
 	height: 100%;
+	pointer-events: none;
 
 	#date-picker{
 		.custom-range-input(#aaa, #fff);
@@ -121,9 +116,12 @@ export default{
 		left: 50%;
 		transform: translateX(-50%);
 		width: 90%;
+		pointer-events: initial;
 	}
 
 	#playback-container{
+		pointer-events: initial;
+
 		.buttons{
 			cursor: pointer;
 
@@ -141,7 +139,7 @@ export default{
 		max-height: 90%;
 		margin: 10px;
 		padding: 10px;
-		// border: 1px solid white;
+		pointer-events: initial;
 
 		#area-selector{
 			color: white;
