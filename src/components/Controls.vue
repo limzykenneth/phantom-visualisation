@@ -1,15 +1,16 @@
 <template>
 	<div id="controls-container">
-		<input type="range" name="date" id="date-picker" step=1 min=0
-			:max="numberOfDays-1"
-			v-model="day"
-		>
 		<div id="playback-container">
 			<button class="buttons" id="pause-button"
 				v-on:click="togglePlayState"
 			>
 				<i class="material-icons md-18">{{ playbackIcon }}</i>
 			</button>
+
+			<input type="range" name="date" id="date-picker" step=1 min=0
+				:max="numberOfDays-1"
+				v-model="day"
+			>
 		</div>
 
 		<div id="selection-container">
@@ -109,25 +110,44 @@ export default{
 	height: 100%;
 	pointer-events: none;
 
-	#date-picker{
-		.custom-range-input(#aaa, #fff);
-
-		position: relative;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 90%;
-		pointer-events: initial;
-	}
-
 	#playback-container{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		max-width: 100vw;
+		height: 90px;
+		padding: 20px;
 		pointer-events: initial;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 
 		.buttons{
 			cursor: pointer;
+			background: none;
+			color: white;
+			border: 1px solid white;
+			padding: 10px 20px;
+
+			&:active{
+				background: rgba(255, 255, 255, 0.25);
+			}
+
+			&#pause-button{
+				margin-right: 20px;
+			}
 
 			.material-icons{
 				display: block;
 			}
+		}
+
+		#date-picker{
+			.custom-range-input(#000, #000);
+
+			position: relative;
+			pointer-events: initial;
+			flex-grow: 2;
 		}
 	}
 
@@ -135,8 +155,8 @@ export default{
 		overflow: scroll;
 		position: absolute;
 		right: 0;
-		bottom: 0;
-		max-height: 90%;
+		top: 0;
+		max-height: ~"calc(100% - 100px)";
 		margin: 10px;
 		padding: 10px;
 		pointer-events: initial;
