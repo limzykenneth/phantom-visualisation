@@ -113,5 +113,9 @@ export default{
 			min-width: 15rem;
 		}
 	}
+
+	@media screen and (max-width: 600px){
+		display: none;
+	}
 }
 </style>

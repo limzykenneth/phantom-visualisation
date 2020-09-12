@@ -68,6 +68,10 @@ export default function(vm){
 			drawCirclesMap(p, vm);
 			// drawCirclesConcentric(p, vm);
 		};
+
+		p.windowResized = function(){
+			p.resizeCanvas(p.windowWidth, p.windowHeight);
+		};
 	};
 
 	return sketch;

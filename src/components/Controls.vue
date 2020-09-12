@@ -186,7 +186,10 @@ export default{
 		padding-top: 0;
 		margin-right: 0;
 		padding-right: 0;
-		pointer-events: initial;
+
+		@media screen and (max-width: 600px){
+			pointer-events: initial;
+		}
 
 		#collapse-button{
 			padding: 10px;
@@ -198,6 +201,11 @@ export default{
 			z-index: 10;
 			position: fixed;
 			min-width: 15rem;
+			pointer-events: initial;
+
+			@media screen and (max-width: 600px){
+				width: 100%;
+			}
 		}
 
 		#area-selector{
@@ -209,10 +217,15 @@ export default{
 			z-index: 0;
 			position: relative;
 			min-width: 15rem;
+			pointer-events: initial;
 
 			&.collapsed{
 				pointer-events: none;
 				transform: translateY(~"calc(-100% - 50px)");
+			}
+
+			@media screen and (max-width: 600px){
+				padding-bottom: 50px;
 			}
 
 			.area{
@@ -223,7 +236,24 @@ export default{
 				&:hover, &.active{
 					background: rgba(255, 255, 255, 0.25);
 				}
+
+				@media screen and (max-width: 600px){
+					background: rgba(0, 0, 0, 1);
+
+					&:hover{
+						background: rgba(0, 0, 0, 1);
+					}
+
+					&.active{
+						background: rgba(100, 100, 100, 1);
+					}
+				}
 			}
+		}
+
+		@media screen and (max-width: 600px){
+			width: 100%;
+			padding-left: 0;
 		}
 	}
 }
