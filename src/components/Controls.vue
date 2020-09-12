@@ -13,7 +13,7 @@
 		</div>
 
 		<div id="selection-container">
-			<select id="area-selection"
+			<!-- <select id="area-selection"
 				v-model="selectedArea"
 			>
 				<option value="" selected></option>
@@ -21,7 +21,15 @@
 					v-for="(area_name, area_code) in boroughs"
 					:value="area_code"
 				>{{ area_name }}</option>
-			</select>
+			</select> -->
+
+			<ul id="area-selector">
+				<li class="area"
+					v-for="(area_name, area_code) in boroughs"
+					:class="area_code === selectedArea ? 'active' : ''"
+					v-on:click="selectArea(area_code)"
+				>{{ area_name }}</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -87,6 +95,9 @@ export default{
 			}else if(this.$store.state.playState === "pause"){
 				this.$store.commit("setPlayState", "play");
 			}
+		},
+		selectArea: function(area_code){
+			this.$store.commit("setCurrentArea", area_code);
 		}
 	}
 };
@@ -100,9 +111,16 @@ export default{
 	left: 0;
 	top: 0;
 	z-index: 5;
+	width: 100%;
+	height: 100%;
 
 	#date-picker{
 		.custom-range-input(#aaa, #fff);
+
+		position: relative;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 90%;
 	}
 
 	#playback-container{
@@ -111,6 +129,34 @@ export default{
 
 			.material-icons{
 				display: block;
+			}
+		}
+	}
+
+	#selection-container{
+		overflow: scroll;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		max-height: 90%;
+		margin: 10px;
+		padding: 10px;
+		// border: 1px solid white;
+
+		#area-selector{
+			color: white;
+			list-style: none;
+			margin: 0px;
+			padding: 0px;
+
+			.area{
+				padding: 10px;
+				border: 1px solid white;
+				cursor: pointer;
+
+				&:hover, &.active{
+					background: rgba(255, 255, 255, 0.25);
+				}
 			}
 		}
 	}
