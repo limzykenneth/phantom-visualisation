@@ -1,4 +1,4 @@
-import {initCirclesMap, drawCirclesMap} from "./visualisations/circlesMap.js";
+import {initCirclesMap, drawCirclesMap, mouseMovedCirclesMap} from "./visualisations/circlesMap.js";
 
 export default function(vm){
 	let sketch = function(p){
@@ -56,6 +56,12 @@ export default function(vm){
 					x: null,
 					y: null
 				};
+			});
+
+			canvas.mouseClicked(() => {
+				if(p.windowWidth > 600){
+					mouseMovedCirclesMap(globalTranslate, p, vm);
+				}
 			});
 		};
 
