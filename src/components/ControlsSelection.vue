@@ -129,9 +129,14 @@ export default{
 		width: 100%;
 		padding-left: 0;
 		pointer-events: initial;
+		display: block;
 	}
 
 	.panel{
+		@media screen and (max-width: 600px){
+			max-height: ~"calc(100vh - 100px)";
+		}
+
 		#collapse-button{
 			padding: 10px;
 			border: 1px solid white;
@@ -164,6 +169,7 @@ export default{
 
 			@media screen and (max-width: 600px){
 				padding-bottom: 50px;
+				max-height: 100vh;
 			}
 
 			.area{
