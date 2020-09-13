@@ -14,6 +14,7 @@
 		<app-controls
 			:number-of-days="numberOfDays"
 			:boroughs="boroughs"
+			:min-date="minDate"
 		></app-controls>
 
 		<info-panel

@@ -6,6 +6,8 @@
 
 		<controls-selection
 			:boroughs="boroughs"
+			:min-date="minDate"
+			:number-of-days="numberOfDays"
 		></controls-selection>
 	</div>
 </template>
@@ -26,6 +28,10 @@ export default{
 			required: true
 		},
 		boroughs: {
+			type: Object,
+			required: true
+		},
+		minDate: {
 			type: Object,
 			required: true
 		}
